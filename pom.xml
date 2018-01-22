@@ -72,6 +72,19 @@
             <name>Confluent</name>
             <url>http://packages.confluent.io/maven/</url>
         </repository>
+
+        <!-- Should be removed before release -->
+        <repository>
+            <id>repository_cv</id>
+            <name>Private MapR repo for CyberVision</name>
+            <url>http://23.21.204.176/nexus/content/groups/mapr-public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -86,6 +99,18 @@
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>connect-api</artifactId>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.kafka</groupId>
+                    <artifactId>kafka-clients</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>1.0.1-mapr-1801</version>
             <scope>provided</scope>
         </dependency>
 
