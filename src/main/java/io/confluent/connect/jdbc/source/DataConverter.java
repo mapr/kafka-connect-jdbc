@@ -119,13 +119,13 @@ public class DataConverter {
 
       case Types.TINYINT: {
         if (optional) {
-          if (metadata.isSigned(col)) {
+          if (isSigned(metadata, col)) {
             builder.field(fieldName, Schema.OPTIONAL_INT8_SCHEMA);
           } else {
             builder.field(fieldName, Schema.OPTIONAL_INT16_SCHEMA);
           }
         } else {
-          if (metadata.isSigned(col)) {
+          if (isSigned(metadata, col)) {
             builder.field(fieldName, Schema.INT8_SCHEMA);
           } else {
             builder.field(fieldName, Schema.INT16_SCHEMA);
@@ -137,13 +137,13 @@ public class DataConverter {
       // 16 bit ints
       case Types.SMALLINT: {
         if (optional) {
-          if (metadata.isSigned(col)) {
+          if (isSigned(metadata, col)) {
             builder.field(fieldName, Schema.OPTIONAL_INT16_SCHEMA);
           } else {
             builder.field(fieldName, Schema.OPTIONAL_INT32_SCHEMA);
           }
         } else {
-          if (metadata.isSigned(col)) {
+          if (isSigned(metadata, col)) {
             builder.field(fieldName, Schema.INT16_SCHEMA);
           } else {
             builder.field(fieldName, Schema.INT32_SCHEMA);
@@ -155,13 +155,13 @@ public class DataConverter {
       // 32 bit ints
       case Types.INTEGER: {
         if (optional) {
-          if (metadata.isSigned(col)) {
+          if (isSigned(metadata, col)) {
             builder.field(fieldName, Schema.OPTIONAL_INT32_SCHEMA);
           } else {
             builder.field(fieldName, Schema.OPTIONAL_INT64_SCHEMA);
           }
         } else {
-          if (metadata.isSigned(col)) {
+          if (isSigned(metadata, col)) {
             builder.field(fieldName, Schema.INT32_SCHEMA);
           } else {
             builder.field(fieldName, Schema.INT64_SCHEMA);
@@ -344,7 +344,7 @@ public class DataConverter {
 
       // 8 bits int
       case Types.TINYINT: {
-        if (resultSet.getMetaData().isSigned(col)) {
+        if (isSigned(resultSet.getMetaData(), col)) {
           colValue = resultSet.getByte(col);
         } else {
           colValue = resultSet.getShort(col);
@@ -354,7 +354,7 @@ public class DataConverter {
 
       // 16 bits int
       case Types.SMALLINT: {
-        if (resultSet.getMetaData().isSigned(col)) {
+        if (isSigned(resultSet.getMetaData(), col)) {
           colValue = resultSet.getShort(col);
         } else {
           colValue = resultSet.getInt(col);
@@ -364,7 +364,7 @@ public class DataConverter {
 
       // 32 bits int
       case Types.INTEGER: {
-        if (resultSet.getMetaData().isSigned(col)) {
+        if (isSigned(resultSet.getMetaData(), col)) {
           colValue = resultSet.getInt(col);
         } else {
           colValue = resultSet.getLong(col);
@@ -520,6 +520,14 @@ public class DataConverter {
     // FIXME: Would passing in some extra info about the schema so we can get the Field by index
     // be faster than setting this by name?
     struct.put(fieldName, resultSet.wasNull() ? null : colValue);
+  }
+  
+  private static boolean isSigned(ResultSetMetaData metadata, int col) throws SQLException {
+    if (metadata.getClass().getName().equals("org.apache.hive.jdbc.HiveResultSetMetaData")) {
+      return true;
+    } else {
+      return metadata.isSigned(col);
+    }      
   }
 
 }
