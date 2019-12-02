@@ -48,24 +48,26 @@ public class DataConverter {
   public static Schema convertSchema(
       String tableName,
       ResultSetMetaData metadata,
-      boolean mapNumerics
+      boolean mapNumerics,
+      boolean isPsql
   ) throws SQLException {
     // TODO: Detect changes to metadata, which will require schema updates
     SchemaBuilder builder = SchemaBuilder.struct().name(tableName);
     for (int col = 1; col <= metadata.getColumnCount(); col++) {
-      addFieldSchema(metadata, col, builder, mapNumerics);
+      addFieldSchema(metadata, col, builder, mapNumerics, isPsql);
     }
     return builder.build();
   }
 
-  public static Struct convertRecord(Schema schema, ResultSet resultSet, boolean mapNumerics)
+  public static Struct convertRecord(Schema schema, ResultSet resultSet,
+                                     boolean mapNumerics, boolean isPsql)
       throws SQLException {
     ResultSetMetaData metadata = resultSet.getMetaData();
     Struct struct = new Struct(schema);
     for (int col = 1; col <= metadata.getColumnCount(); col++) {
       try {
         convertFieldValue(resultSet, col, metadata.getColumnType(col), struct,
-                          metadata.getColumnLabel(col), mapNumerics);
+                          metadata.getColumnLabel(col), mapNumerics, isPsql);
       } catch (IOException e) {
         log.warn("Ignoring record because processing failed:", e);
       } catch (SQLException e) {
@@ -77,7 +79,7 @@ public class DataConverter {
 
 
   private static void addFieldSchema(ResultSetMetaData metadata, int col,
-                                     SchemaBuilder builder, boolean mapNumerics)
+                                     SchemaBuilder builder, boolean mapNumerics, boolean isPsql)
       throws SQLException {
     // Label is what the query requested the column name be using an "AS" clause, name is the
     // original
@@ -318,7 +320,8 @@ public class DataConverter {
   }
 
   private static void convertFieldValue(ResultSet resultSet, int col, int colType,
-                                        Struct struct, String fieldName, boolean mapNumerics)
+                                        Struct struct, String fieldName,
+                                        boolean mapNumerics, boolean isPsql)
       throws SQLException, IOException {
     final Object colValue;
     switch (colType) {
@@ -333,12 +336,11 @@ public class DataConverter {
       }
 
       case Types.BIT: {
-        /**
-         * BIT should be either 0 or 1.
-         * TODO: Postgres handles this differently, returning a string "t" or "f". See the
-         * elasticsearch-jdbc plugin for an example of how this is handled
-         */
-        colValue = resultSet.getByte(col);
+        if (!isPsql) {
+          colValue = resultSet.getByte(col);
+        } else {
+          colValue = (byte) (resultSet.getBoolean(col) ? 1 : 0);
+        }
         break;
       }
 
