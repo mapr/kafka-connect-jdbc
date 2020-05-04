@@ -65,6 +65,7 @@
         <licenses.version>${project.version}</licenses.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.package.home>target/${project.artifactId}-${project.version}-package</project.package.home>
+        <zookeeper.version>3.5.6-mapr-SNAPSHOT</zookeeper.version>
     </properties>
 
     <repositories>
