@@ -57,7 +57,7 @@ public class SqliteDatabaseDialect extends GenericDatabaseDialect {
    * @param config the connector configuration; may not be null
    */
   public SqliteDatabaseDialect(AbstractConfig config) {
-    super(config, new IdentifierRules(".", "`", "`"));
+    super(config, new IdentifierRules(".", "\"", "\""));
   }
 
   @Override
