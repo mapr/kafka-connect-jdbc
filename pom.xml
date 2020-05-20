@@ -66,6 +66,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.package.home>target/${project.artifactId}-${project.version}-package</project.package.home>
         <zookeeper.version>3.5.6-mapr-SNAPSHOT</zookeeper.version>
+        <schema.registry.version>5.1.2.0-mapr-SNAPSHOT</schema.registry.version>
     </properties>
 
     <repositories>
@@ -114,6 +115,11 @@
             <artifactId>kafka-clients</artifactId>
             <version>2.1.1.0-mapr-SNAPSHOT</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-connect-avro-converter</artifactId>
+            <version>${schema.registry.version}</version>
         </dependency>
 
          <!-- JDBC drivers, only included in runtime so they get packaged -->
