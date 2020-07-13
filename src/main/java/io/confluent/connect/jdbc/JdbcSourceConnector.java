@@ -23,8 +23,6 @@ import org.apache.kafka.connect.util.ConnectorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -94,13 +92,7 @@ public class JdbcSourceConnector extends SourceConnector {
     );
 
     // Initial connection attempt
-    Connection conn = cachedConnectionProvider.getConnection();
-
-    // If JDBC connection URL contains a database name and there were no catalog.pattern provided,
-    // we should use database name from URL as catalog.pattern
-    if (setCatalogPatternIfNeededAndRecallStartMethod(properties, config, conn)) {
-      return;
-    }
+    cachedConnectionProvider.getConnection();
 
     long tablePollMs = config.getLong(JdbcSourceConnectorConfig.TABLE_POLL_INTERVAL_MS_CONFIG);
     List<String> whitelist = config.getList(JdbcSourceConnectorConfig.TABLE_WHITELIST_CONFIG);
@@ -133,30 +125,6 @@ public class JdbcSourceConnector extends SourceConnector {
         blacklistSet
     );
     tableMonitorThread.start();
-  }
-
-  private boolean setCatalogPatternIfNeededAndRecallStartMethod(Map<String, String> properties,
-                                                                JdbcSourceConnectorConfig config,
-                                                                Connection conn) {
-    log.debug("Checking catalog.pattern and database name from JDBC URL...");
-    try {
-      String catalogPattern = config.getString(JdbcSourceConnectorConfig.CATALOG_PATTERN_CONFIG);
-      String catalogFromConnection = conn.getCatalog();
-      
-      if (catalogFromConnection != null && !catalogFromConnection.isEmpty()
-          && catalogPattern == null) {
-        log.debug("Setting catalog.pattern as {} from JDBC URL", catalogFromConnection);
-        properties.put(JdbcSourceConnectorConfig.CATALOG_PATTERN_CONFIG, catalogFromConnection);
-        cachedConnectionProvider.close();
-        start(properties);
-        return true;
-      }
-      log.debug("No changes for catalog.pattern needed");
-    } catch (SQLException e) {
-      log.error("Error while getting catalog from JDBC connection: {}", e.getMessage());
-      throw new ConnectException("Couldn't configure catalog.pattern for JdbcSourceConnector", e);
-    }
-    return false;
   }
 
   @Override

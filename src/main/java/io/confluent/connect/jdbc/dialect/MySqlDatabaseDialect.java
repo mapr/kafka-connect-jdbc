@@ -25,6 +25,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Properties;
 
 import io.confluent.connect.jdbc.dialect.DatabaseDialectProvider.SubprotocolBasedProvider;
 import io.confluent.connect.jdbc.sink.metadata.SinkRecordField;
@@ -160,5 +161,11 @@ public class MySqlDatabaseDialect extends GenericDatabaseDialect {
     return super.sanitizedUrl(url)
                 .replaceAll("(?i)([(,]password=)[^,)]*", "$1****")
                 .replaceAll("(://[^:]*:)([^@]*)@", "$1****@");
+  }
+
+  @Override
+  protected Properties addConnectionProperties(Properties properties) {
+    properties.setProperty("nullCatalogMeansCurrent", "true");
+    return super.addConnectionProperties(properties);
   }
 }

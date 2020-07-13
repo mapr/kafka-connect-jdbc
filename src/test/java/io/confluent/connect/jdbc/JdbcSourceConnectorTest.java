@@ -121,9 +121,6 @@ public class JdbcSourceConnectorTest {
     mockCachedConnectionProvider.close();
     PowerMock.expectLastCall().atLeastOnce();
 
-    // We also don't worry about the value of current catalog here so we will provide it as null
-    EasyMock.expect(conn.getCatalog()).andReturn(null);
-
     PowerMock.replayAll();
 
     connector.start(connProps);
