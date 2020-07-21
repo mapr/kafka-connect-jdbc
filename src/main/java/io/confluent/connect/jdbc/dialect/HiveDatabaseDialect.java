@@ -121,4 +121,16 @@ public class HiveDatabaseDialect extends GenericDatabaseDialect {
         false
     );
   }
+
+  /**
+   * Determine the name of the field. By default this is the column alias or name.
+   *
+   * @param columnDefinition the column definition; never null
+   * @return the field name; never null
+   */
+  @Override
+  protected String fieldNameFor(ColumnDefinition columnDefinition) {
+    String fullFieldName = columnDefinition.id().aliasOrName();
+    return fullFieldName.substring(fullFieldName.lastIndexOf('.') + 1);
+  }
 }
