@@ -20,8 +20,12 @@ import io.confluent.connect.jdbc.util.ColumnId;
 import io.confluent.connect.jdbc.util.TableId;
 import org.apache.kafka.common.config.AbstractConfig;
 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,6 +54,26 @@ public class HiveDatabaseDialect extends GenericDatabaseDialect {
    */
   public HiveDatabaseDialect(AbstractConfig config) {
     super(config);
+  }
+
+  @Override
+  public List<TableId> tableIds(Connection conn) throws SQLException {
+    DatabaseMetaData metadata = conn.getMetaData();
+    String[] tableTypes = tableTypes(metadata, this.tableTypes);
+
+    try (ResultSet rs = metadata.getTables(catalogPattern(), schemaPattern(), "%", tableTypes)) {
+      List<TableId> tableIds = new ArrayList<>();
+      while (rs.next()) {
+        String catalogName = rs.getString(1);
+        String schemaName = "";
+        String tableName = rs.getString(3);
+        TableId tableId = new TableId(catalogName, schemaName, tableName);
+        if (includeTable(tableId)) {
+          tableIds.add(tableId);
+        }
+      }
+      return tableIds;
+    }
   }
 
   @Override
