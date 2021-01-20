@@ -38,7 +38,7 @@
     <description>
        A Kafka Connect JDBC connector for copying data between databases and Kafka.
     </description>
-
+    <version>4.1.0-mapr-SNAPSHOT</version>
     <licenses>
         <license>
             <name>Apache License 2.0</name>
@@ -55,7 +55,7 @@
     </scm>
 
     <properties>
-        <confluent.version>${project.version}</confluent.version>
+        <confluent.version>4.1.0</confluent.version>
         <derby.version>10.11.1.1</derby.version>
         <commons-io.version>2.4</commons-io.version>
         <sqlite-jdbc.version>3.8.11.2</sqlite-jdbc.version>
@@ -75,9 +75,9 @@
 
         <!-- Should be removed before release -->
         <repository>
-            <id>repository_cv</id>
+            <id>mapr</id>
             <name>Private MapR repo for CyberVision</name>
-            <url>http://repository_cv.mapr.com/nexus/content/groups/mapr-public</url>
+            <url>${env.MAPR_MAVEN_REPO}</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
