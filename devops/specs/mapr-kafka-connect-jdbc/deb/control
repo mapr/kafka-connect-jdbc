@@ -1,0 +1,10 @@
+Package: mapr-kafka-connect-jdbc
+Version: __RELEASE_VERSION__
+Section: base
+Priority: optional
+Architecture: all
+Depends: mapr-client (>= 7.1.0) | mapr-core (>= 7.1.0) , mapr-kafka (>= 2.6.1)
+Maintainer: Hewlett Packard Enterprise <ezmeral_software_support@hpe.com>
+Description: Ezmeral Ecosystem Pack: Kafka Connect JDBC connector package
+  Tag: __RELEASE_BRANCH__
+  Commit: __GIT_COMMIT__

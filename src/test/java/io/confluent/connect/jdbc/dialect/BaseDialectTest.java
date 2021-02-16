@@ -104,7 +104,7 @@ public abstract class BaseDialectTest<T extends GenericDatabaseDialect> {
   @Before
   public void setup() throws Exception {
     defaultLoginTimeout = DriverManager.getLoginTimeout();
-    DriverManager.setLoginTimeout(1);
+    DriverManager.setLoginTimeout(2);
 
     // Set up some data ...
     Schema optionalDateWithDefault = Date.builder().defaultValue(MARCH_15_2001_MIDNIGHT.getTime())

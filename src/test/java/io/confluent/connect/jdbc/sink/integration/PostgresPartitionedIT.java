@@ -15,6 +15,7 @@ import io.confluent.common.utils.IntegrationTest;
 import io.confluent.connect.jdbc.integration.BaseConnectorIT;
 import io.confluent.connect.jdbc.sink.JdbcSinkConfig;
 
+import io.confluent.connect.jdbc.util.categories.UnsupportedTest;
 import org.apache.kafka.connect.data.Date;
 import org.apache.kafka.connect.data.Schema;
 import org.apache.kafka.connect.data.SchemaBuilder;
@@ -30,7 +31,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-@Category(IntegrationTest.class)
+@Category({IntegrationTest.class, UnsupportedTest.class})
 public class PostgresPartitionedIT extends BaseConnectorIT {
 
   @Rule

@@ -1,0 +1,47 @@
+#!/bin/bash
+
+[ -n "$VERBOSE" ] && echo "postinst called with argument \`$1'" >&2
+[ -n "$VERBOSE" ] && set -x
+
+
+#
+# summary of how this script can be called:
+#        * <postinst> `configure' <most-recently-configured-version>
+#        * <old-postinst> `abort-upgrade' <new version>
+#        * <conflictor's-postinst> `abort-remove' `in-favour' <package>
+#          <new-version>
+#        * <postinst> `abort-remove'
+#        * <deconfigured's-postinst> `abort-deconfigure' `in-favour'
+#          <failed-install-package> <version> `removing'
+#          <conflicting-package> <version>
+#
+case "$1" in
+    configure)
+        if [ -f __PREFIX__/kafka-connect-jdbc/kafkaconnectjdbcversion ]; then
+            rm -f __PREFIX__/kafka-connect-jdbc/kafkaconnectjdbcversion
+        fi
+        echo "__VERSION_3DIGIT__" > __PREFIX__/kafka-connect-jdbc/kafkaconnectjdbcversion
+        if [ -f  __PREFIX__/roles/kafka ]; then 
+            rm -f __PREFIX__/roles/kafka
+        fi
+        touch __PREFIX__/roles/kafka
+        
+        mkdir -p "__INSTALL_3DIGIT__"/conf
+        if [ -z "$2" ]; then
+            touch "__INSTALL_3DIGIT__/conf/.not_configured_yet"
+        fi        
+
+        
+        
+    ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+
+

@@ -1,5 +1,6 @@
 package io.confluent.connect.jdbc.sink.integration;
 
+import io.confluent.connect.jdbc.util.categories.UnsupportedTest;
 import org.apache.kafka.connect.data.Date;
 import org.apache.kafka.connect.data.Decimal;
 import org.apache.kafka.connect.data.Schema;
@@ -38,7 +39,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-@Category(IntegrationTest.class)
+@Category({IntegrationTest.class, UnsupportedTest.class})
 public class OracleDatatypeIT extends BaseConnectorIT {
     @SuppressWarnings( "deprecation" )
     @Rule

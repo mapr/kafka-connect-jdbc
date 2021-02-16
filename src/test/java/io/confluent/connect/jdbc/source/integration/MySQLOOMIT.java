@@ -5,6 +5,7 @@ import io.confluent.common.utils.IntegrationTest;
 import io.confluent.connect.jdbc.source.JdbcSourceConnectorConfig;
 import io.confluent.connect.jdbc.source.JdbcSourceTaskConfig;
 import java.util.HashMap;
+import io.confluent.connect.jdbc.util.categories.UnsupportedTest;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.experimental.categories.Category;
@@ -14,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Integration test for MySQL OOM conditions.
  */
-@Category(IntegrationTest.class)
+@Category({IntegrationTest.class, UnsupportedTest.class})
 public class MySQLOOMIT extends BaseOOMIntegrationTest {
 
   private static Logger log = LoggerFactory.getLogger(MySQLOOMIT.class);

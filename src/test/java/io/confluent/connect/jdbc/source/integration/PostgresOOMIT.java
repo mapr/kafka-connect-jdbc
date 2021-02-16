@@ -7,6 +7,7 @@ import io.confluent.common.utils.IntegrationTest;
 import io.confluent.connect.jdbc.source.JdbcSourceConnectorConfig;
 import io.confluent.connect.jdbc.source.JdbcSourceTask;
 import io.confluent.connect.jdbc.source.JdbcSourceTaskConfig;
+import io.confluent.connect.jdbc.util.categories.UnsupportedTest;
 import io.zonky.test.db.postgres.junit.EmbeddedPostgresRules;
 import io.zonky.test.db.postgres.junit.SingleInstancePostgresRule;
 import java.sql.Connection;
@@ -24,7 +25,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Integration test for Postgres OOM conditions.
  */
-@Category(IntegrationTest.class)
+@Category({IntegrationTest.class, UnsupportedTest.class})
 public class PostgresOOMIT extends BaseOOMIntegrationTest {
 
   private static Logger log = LoggerFactory.getLogger(PostgresOOMIT.class);

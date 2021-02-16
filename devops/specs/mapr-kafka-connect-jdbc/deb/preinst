@@ -1,0 +1,34 @@
+#!/bin/bash
+
+[ -n "$VERBOSE" ] && echo "preinst called with argument \`$1'" >&2
+[ -n "$VERBOSE" ] && set -x
+
+#
+# summary of how this script can be called:
+#        * <new-preinst> `install'
+#        * <new-preinst> `install' <old-version>
+#        * <new-preinst> `upgrade' <old-version>
+#
+case "$1" in
+    install)
+    ;;
+
+    upgrade)
+    	OLD_VERSION=$(cat __PREFIX__/kafka-connect-jdbc/kafkaconnectjdbcversion)
+    	if [ -d  __PREFIX__/kafka-connect-jdbc/kafka-connect-jdbc-$OLD_VERSION/conf ]; then
+        	rm -rf __PREFIX__/kafka-connect-jdbc/kafka-connect-jdbc-$OLD_VERSION/conf
+	    fi
+	;;
+
+    abort-upgrade)
+    ;;
+
+    *)
+        echo "preinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+
+
+
+

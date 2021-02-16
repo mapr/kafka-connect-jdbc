@@ -31,6 +31,7 @@ import io.confluent.common.utils.IntegrationTest;
 import io.confluent.connect.jdbc.integration.BaseConnectorIT;
 import io.confluent.connect.jdbc.sink.JdbcSinkConfig;
 
+import io.confluent.connect.jdbc.util.categories.UnsupportedTest;
 import io.zonky.test.db.postgres.junit.EmbeddedPostgresRules;
 import io.zonky.test.db.postgres.junit.SingleInstancePostgresRule;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -59,7 +60,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Integration tests for writing to Postgres with UUID columns.
  */
-@Category(IntegrationTest.class)
+@Category({IntegrationTest.class, UnsupportedTest.class})
 public class PostgresDatatypeIT extends BaseConnectorIT {
 
   private static final Logger LOG = LoggerFactory.getLogger(PostgresDatatypeIT.class);
