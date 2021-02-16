@@ -217,7 +217,7 @@ public class JdbcSourceConnectorConfig extends AbstractConfig {
       + "  * ``\"\"`` retrieves those without a catalog \n"
       + "  * null (default) indicates that the schema name is not used to narrow the search and "
         + "that all table metadata is fetched, regardless of the catalog.";
-  private static final String CATALOG_PATTERN_DISPLAY = "Schema pattern";
+  private static final String CATALOG_PATTERN_DISPLAY = "Catalog pattern";
   public static final String CATALOG_PATTERN_DEFAULT = null;
 
   public static final String QUERY_CONFIG = "query";
@@ -272,7 +272,7 @@ public class JdbcSourceConnectorConfig extends AbstractConfig {
 
   public static final String QUERY_SUFFIX_CONFIG = "query.suffix";
   public static final String QUERY_SUFFIX_DEFAULT = "";
-  public static final String QUERY_SUFFIX_DOC = 
+  public static final String QUERY_SUFFIX_DOC =
       "Suffix to append at the end of the generated query.";
   public static final String QUERY_SUFFIX_DISPLAY = "Query suffix";
 

@@ -26,7 +26,7 @@
     <groupId>io.confluent</groupId>
     <artifactId>kafka-connect-jdbc</artifactId>
     <packaging>jar</packaging>
-    <version>10.0.1</version>
+    <version>10.0.1.0-mapr-SNAPSHOT</version>
     <name>kafka-connect-jdbc</name>
     <organization>
         <name>Confluent, Inc.</name>
@@ -64,7 +64,17 @@
         <licenses.name>Confluent Community License</licenses.name>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.package.home>target/${project.artifactId}-${project.version}-package</project.package.home>
+        <zookeeper.version>3.5.6-mapr-SNAPSHOT</zookeeper.version>
+        <schema.registry.version>6.0.0.0-mapr-SNAPSHOT</schema.registry.version>
+        <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
+        <spotbugs.version>3.1.9</spotbugs.version>
         <maven.release.plugin.version>2.5.3</maven.release.plugin.version>
+        <junit.integration.categories>
+            io.confluent.common.utils.IntegrationTest
+        </junit.integration.categories>
+        <junit.unsupported.categories>
+            io.confluent.connect.jdbc.util.categories.UnsupportedTest
+        </junit.unsupported.categories>
     </properties>
 
     <repositories>
@@ -73,13 +83,51 @@
             <name>Confluent</name>
             <url>http://packages.confluent.io/maven/</url>
         </repository>
+
+        <!-- Should be removed before release -->
+        <repository>
+            <id>mapr</id>
+            <name>Private MapR repo for CyberVision</name>
+            <url>${env.MAPR_MAVEN_REPO}</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
     </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>confluent</id>
+            <name>Confluent</name>
+            <url>http://packages.confluent.io/maven/</url>
+        </pluginRepository>
+    </pluginRepositories>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>connect-api</artifactId>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.kafka</groupId>
+                    <artifactId>kafka-clients</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>2.6.1.0-mapr-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-connect-avro-converter</artifactId>
+            <version>${schema.registry.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.kafka</groupId>
@@ -318,11 +366,16 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <trimStackTrace>false</trimStackTrace>
+                    <excludedGroups>${junit.integration.categories},${junit.unsupported.categories}</excludedGroups>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <groups>${junit.integration.categories}</groups>
+                    <excludedGroups>${junit.unsupported.categories}</excludedGroups>
+                </configuration>
                 <executions>
                     <execution>
                         <!--normal integration tests should not run the memory-restricted tests -->
@@ -600,5 +653,20 @@
                 </plugins>
             </build>
         </profile>
+               <profile>
+                    <id>binary</id>
+                    <build>
+                        <plugins>
+                            <plugin>
+                                <artifactId>maven-assembly-plugin</artifactId>
+                                <configuration>
+                                    <descriptors>
+                                        <descriptor>src/assembly/bin.xml</descriptor>
+                                    </descriptors>
+                                </configuration>
+                            </plugin>
+                        </plugins>
+                    </build>
+               </profile>
     </profiles>
 </project>

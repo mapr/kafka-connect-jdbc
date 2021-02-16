@@ -14,10 +14,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import io.confluent.common.utils.IntegrationTest;
+import io.confluent.connect.jdbc.util.categories.UnsupportedTest;
 import org.apache.kafka.connect.storage.StringConverter;
 import org.testcontainers.containers.FixedHostPortGenericContainer;
-
-import org.apache.kafka.test.IntegrationTest;
 
 import org.junit.After;
 import org.junit.Before;
@@ -67,7 +67,7 @@ import static org.apache.kafka.connect.runtime.ConnectorConfig.VALUE_CONVERTER_C
  *
  * Older MSSQL Server instances do not have this problem.
  */
-@Category(IntegrationTest.class)
+@Category({IntegrationTest.class, UnsupportedTest.class})
 public class MSSQLDateTimeIT extends BaseConnectorIT {
 
     private static final Logger log = LoggerFactory.getLogger(MSSQLDateTimeIT.class);

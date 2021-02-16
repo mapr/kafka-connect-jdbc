@@ -27,13 +27,14 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import io.confluent.common.utils.IntegrationTest;
+import io.confluent.connect.jdbc.util.categories.UnsupportedTest;
 import io.confluent.connect.jdbc.JdbcSourceConnector;
 import io.confluent.connect.jdbc.source.JdbcSourceConnectorConfig;
 import io.confluent.connect.jdbc.source.JdbcSourceTaskConfig;
 
 import static org.apache.kafka.connect.runtime.ConnectorConfig.TASKS_MAX_CONFIG;
 
-@Category(IntegrationTest.class)
+@Category({IntegrationTest.class, UnsupportedTest.class})
 public class PauseResumeIT {
   private static final long CONNECTOR_STARTUP_DURATION_MS = TimeUnit.SECONDS.toMillis(60);
   private static final long POLLING_INTERVAL_MS = TimeUnit.SECONDS.toMillis(10);

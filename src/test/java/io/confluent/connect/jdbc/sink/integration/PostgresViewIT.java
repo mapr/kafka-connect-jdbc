@@ -23,6 +23,7 @@ import static org.junit.Assert.fail;
 import io.confluent.common.utils.IntegrationTest;
 import io.confluent.connect.jdbc.sink.JdbcSinkConfig;
 import io.confluent.connect.jdbc.sink.JdbcSinkTask;
+import io.confluent.connect.jdbc.util.categories.UnsupportedTest;
 import io.zonky.test.db.postgres.junit.EmbeddedPostgresRules;
 import io.zonky.test.db.postgres.junit.SingleInstancePostgresRule;
 import java.sql.Connection;
@@ -48,7 +49,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Integration tests for writing to Postgres views.
  */
-@Category(IntegrationTest.class)
+@Category({IntegrationTest.class, UnsupportedTest.class})
 public class PostgresViewIT {
 
   private static Logger log = LoggerFactory.getLogger(PostgresViewIT.class);
