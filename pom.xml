@@ -79,6 +79,7 @@
         <junit.unsupported.categories>
             io.confluent.connect.jdbc.util.categories.UnsupportedTest
         </junit.unsupported.categories>
+        <dependency.check.version>7.4.4</dependency.check.version>
     </properties>
 
     <repositories>
