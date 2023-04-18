@@ -70,7 +70,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.package.home>target/${project.artifactId}-${project.version}-package</project.package.home>
         <zookeeper.version>3.5.6-mapr-SNAPSHOT</zookeeper.version>
-        <schema.registry.version>6.0.0.300-eep-910-SNAPSHOT</schema.registry.version>
+        <schema.registry.version>6.0.0.400-eep-911-SNAPSHOT</schema.registry.version>
         <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
         <spotbugs.version>3.1.9</spotbugs.version>
         <maven.release.plugin.version>2.5.3</maven.release.plugin.version>
