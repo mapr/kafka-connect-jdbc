@@ -35,7 +35,7 @@ pipeline {
   }
   parameters {
     choice(name: 'BUILD_TYPE', choices: ['Dev','EBF','Release'], description: 'default - Dev. EBF and Release args you can use only in release branches')
-    string(name: 'MAKEFILE_ENV_VARS', defaultValue: '', description: 'Variables you can pass to makefile (command will be: make {THIS VAR} {PROJECT-name}). Please DO NOT put component_branch_name')
+    string(name: 'MAKEFILE_ENV_VARS', defaultValue: 'KAFKA_CONNECT_JDBC_VERSION=10.0.1.500', description: 'Variables you can pass to makefile (command will be: make {THIS VAR} {PROJECT-name}). Please DO NOT put component_branch_name')
   }
   stages {
     stage("Setup settings and variables") {
