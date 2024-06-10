@@ -30,7 +30,6 @@ setup_package() {
 
   mv -T "${BUILD_ROOT}/build" "$pkg_home"
 
-  echo "$PKG_3DIGIT_VERSION" > "${opt_mapr}/${PKG_NAME}/${PKG_NAME}version"
   ln -sr "$pkg_home" "${opt_mapr}/${PKG_NAME}/current"
 }
 
