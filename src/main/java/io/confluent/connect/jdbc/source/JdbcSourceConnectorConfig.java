@@ -312,6 +312,12 @@ public class JdbcSourceConnectorConfig extends AbstractConfig {
       + "For backward compatibility, the default is ``always``.";
   public static final String QUOTE_SQL_IDENTIFIERS_DISPLAY = "Quote Identifiers";
 
+  public static final String CANCEL_QUERY_ON_TASK_CANCEL_CONFIG = "cancel.query.on.task.cancel";
+  public static final boolean CANCEL_QUERY_ON_TASK_CANCEL_DEFAULT = false;
+  public static final String CANCEL_QUERY_ON_TASK_CANCEL_DOC =
+          "Whether or not to invoke asynchronously java.sql.Statement#close() "
+                  + "on running statement if a task gets cancelled";
+
   public static final String QUERY_SUFFIX_CONFIG = "query.suffix";
   public static final String QUERY_SUFFIX_DEFAULT = "";
   public static final String QUERY_SUFFIX_DOC =
@@ -782,7 +788,13 @@ public class JdbcSourceConnectorConfig extends AbstractConfig {
         ++orderInGroup,
         Width.MEDIUM,
         TIMESTAMP_GRANULARITY_DISPLAY,
-        TIMESTAMP_GRANULARITY_RECOMMENDER);
+        TIMESTAMP_GRANULARITY_RECOMMENDER
+    ).define(
+            CANCEL_QUERY_ON_TASK_CANCEL_CONFIG,
+            Type.BOOLEAN,
+            CANCEL_QUERY_ON_TASK_CANCEL_DEFAULT,
+            Importance.LOW,
+            CANCEL_QUERY_ON_TASK_CANCEL_DOC);
   }
 
   public static final ConfigDef CONFIG_DEF = baseConfigDef();

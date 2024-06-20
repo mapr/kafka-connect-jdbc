@@ -15,6 +15,7 @@
 
 package io.confluent.connect.jdbc.source;
 
+import org.apache.kafka.common.KafkaException;
 import org.apache.kafka.connect.source.SourceRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,6 +112,14 @@ abstract class TableQuerier implements Comparable<TableQuerier> {
 
   public boolean next() throws SQLException {
     return resultSet.next();
+  }
+
+  public void cancel() {
+    try {
+      stmt.cancel();
+    } catch (SQLException e) {
+      throw new KafkaException(e);
+    }
   }
 
   public abstract SourceRecord extractRecord() throws SQLException;

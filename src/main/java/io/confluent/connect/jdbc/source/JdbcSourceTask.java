@@ -74,6 +74,8 @@ public class JdbcSourceTask extends SourceTask {
 
   int maxRetriesPerQuerier;
 
+  private boolean cancelQueryOnTaskCancel = false;
+
   public JdbcSourceTask() {
     this.time = new SystemTime();
   }
@@ -127,6 +129,9 @@ public class JdbcSourceTask extends SourceTask {
     final String url = config.getString(JdbcSourceConnectorConfig.CONNECTION_URL_CONFIG);
     final int maxConnAttempts = config.getInt(JdbcSourceConnectorConfig.CONNECTION_ATTEMPTS_CONFIG);
     final long retryBackoff = config.getLong(JdbcSourceConnectorConfig.CONNECTION_BACKOFF_CONFIG);
+
+    cancelQueryOnTaskCancel = config.getBoolean(
+            JdbcSourceConnectorConfig.CANCEL_QUERY_ON_TASK_CANCEL_CONFIG);
 
     final String dialectName = config.getString(JdbcSourceConnectorConfig.DIALECT_NAME_CONFIG);
     if (dialectName != null && !dialectName.trim().isEmpty()) {
@@ -392,6 +397,17 @@ public class JdbcSourceTask extends SourceTask {
       } finally {
         dialect = null;
       }
+    }
+  }
+
+  @Override
+  public void cancel() {
+    if (!cancelQueryOnTaskCancel) {
+      return;
+    }
+    TableQuerier querier = tableQueue.peek();
+    if (querier != null) {
+      querier.cancel();
     }
   }
 
