@@ -1,20 +1,20 @@
 %undefine __check_files
 
-summary:     Ezmeral Ecosystem Pack: Kafka Connect JDBC connector
+summary:     HPE DataFabric Ecosystem Pack: Confluent Kafka Connect JDBC
 license:     Hewlett Packard Enterprise, CopyRight
-Vendor:      Hewlett Packard Enterprise, <ezmeral_software_support@hpe.com>
+Vendor:      Hewlett Packard Enterprise
 name:        mapr-kafka-connect-jdbc
 version:     __RELEASE_VERSION__
 release:     1
 prefix:      /
-group:       MapR
+group:       HPE
 buildarch:   noarch
 requires:    mapr-client >= 7.2.0, mapr-kafka >= 3.6.1
 conflicts:   mapr-core < 7.2.0, mapr-kafka < 3.6.1
 AutoReqProv: no
 
 %description
-Ezmeral Ecosystem Pack: Kafka Connect JDBC connector package
+Confluent Kafka Connect JDBC distribution included in HPE DataFabric Software Ecosystem Pack
 Tag: __RELEASE_BRANCH__
 Commit: __GIT_COMMIT__
 
