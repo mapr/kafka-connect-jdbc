@@ -26,7 +26,7 @@
     <groupId>io.confluent</groupId>
     <artifactId>kafka-connect-jdbc</artifactId>
     <packaging>jar</packaging>
-    <version>10.7.4.100-eep-941-SNAPSHOT</version>
+    <version>10.7.4.200-dep-1000-SNAPSHOT</version>
     <name>kafka-connect-jdbc</name>
     <organization>
         <name>Confluent, Inc.</name>
@@ -49,11 +49,11 @@
         <connection>scm:git:git://github.com/confluentinc/kafka-connect-jdbc.git</connection>
         <developerConnection>scm:git:git@github.com:confluentinc/kafka-connect-jdbc.git</developerConnection>
         <url>https://github.com/confluentinc/kafka-connect-jdbc</url>
-        <tag>v10.7.4.100-eep-941-SNAPSHOT</tag>
+        <tag>10.7.4.200-dep-1000-SNAPSHOT</tag>
     </scm>
 
     <properties>
-        <kafka.version>3.6.1.200-eep-940-SNAPSHOT</kafka.version>
+        <kafka.version>3.6.1.300-dep-1000-SNAPSHOT</kafka.version>
         <derby.version>10.14.2.0</derby.version>
         <commons-io.version>2.4</commons-io.version>
         <kafka.connect.maven.plugin.version>0.11.1</kafka.connect.maven.plugin.version>
@@ -74,7 +74,7 @@
         <jackson.version>2.17.0</jackson.version>
         <jackson.databind.version>2.17.0</jackson.databind.version>
         <zookeeper.version>3.5.6-mapr-SNAPSHOT</zookeeper.version>
-        <schema.registry.version>7.6.0.300-eep-941-SNAPSHOT</schema.registry.version>
+        <schema.registry.version>7.6.0.400-dep-1000-SNAPSHOT</schema.registry.version>
         <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
         <spotbugs.version>3.1.9</spotbugs.version>
         <junit.integration.categories>
