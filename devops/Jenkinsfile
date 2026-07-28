@@ -33,7 +33,7 @@ pipeline {
   }
   parameters {
     choice(name: 'BUILD_TYPE', choices: ['Dev','EBF','Release'], description: 'default - Dev. EBF and Release args you can use only in release branches.')
-    string(name: 'BUILD_ENV_VARS', defaultValue: 'KAFKA_MAVEN_ARGS="-Pbinary clean install"', description: 'Variables you can pass to build script. Command will be: "env {THIS VARS} path/to/build.sh".')
+    string(name: 'BUILD_ENV_VARS', defaultValue: 'KAFKA_MAVEN_ARGS="-Pbinary -DskipTests -Ddependency.check.skip=true clean install"', description: 'Variables you can pass to build script. Command will be: "env {THIS VARS} path/to/build.sh".')
   }
   stages {
     stage("Setup settings and variables") {
