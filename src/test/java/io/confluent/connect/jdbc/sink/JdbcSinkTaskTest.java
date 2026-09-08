@@ -247,8 +247,6 @@ public class JdbcSinkTaskTest extends EasyMockSupport {
 
   @Test
   public void stopBeforeStartDoesNotThrow() {
-    // The framework can call stop() on a task whose start() never ran or never completed
-    // (e.g. a sibling task's startup failure aborts this one first), leaving writer unset.
     JdbcSinkTask neverStarted = new JdbcSinkTask();
     neverStarted.stop();
   }
